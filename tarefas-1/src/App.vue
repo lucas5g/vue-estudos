@@ -2,42 +2,45 @@
   <div id="app">
     <h1>Tarefas</h1>
     <NewTask @taskAdded="addTask" />
-    <TaskGrid :tasks="tasks" />
+    <TaskGrid @taskDeleted="deleteTask" :tasks="tasks" />
   </div>
 </template>
 
 <script>
-import NewTask from "./components/NewTask.vue"
+import NewTask from "./components/NewTask.vue";
 import TaskGrid from "./components/TaskGrid.vue";
 
 export default {
   name: "App",
   components: {
-    TaskGrid, NewTask
+    TaskGrid,
+    NewTask,
   },
   data() {
     return {
       tasks: [
-        { name: "Lavar a louça", pending: false },
-        { name: "Comprar uma blusa", pending: true },
+       
       ],
     };
   },
-  methods:{
-    addTask(task){
-      const sameName = t => t.name === task.name 
-      const reallyNew = this.tasks.filter(sameName).length == 0 
-      if(reallyNew){
+  methods: {
+    addTask(task) {
+      const sameName = (t) => t.name === task.name;
+      const reallyNew = this.tasks.filter(sameName).length == 0;
+      if (reallyNew) {
         this.tasks.push({
           name: task.name,
-          pending: task.pending || true
-        })
+          pending: task.pending || true,
+        });
       }
-
-
-
+    },
+    // deleteTask(task){
+      // const i = this.tasks.indexOf(task)
+      // if(i >= 0) this.tasks.splice(i, 1)
+    deleteTask(i){
+      this.tasks.splice(i, 1)
     }
-  }
+  },
 };
 </script>
 
