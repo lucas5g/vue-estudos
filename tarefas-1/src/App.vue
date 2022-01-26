@@ -1,27 +1,53 @@
 <template>
   <div id="app">
     <h1>Tarefas</h1>
+    <TasksProgress :progress="progress" />
     <NewTask @taskAdded="addTask" />
-    <TaskGrid @taskDeleted="deleteTask" @taskStateChanged="toggleTaskState" :tasks="tasks" />
+    <TaskGrid
+      :tasks="tasks"
+      @taskDeleted="deleteTask"
+      @taskStateChanged="toggleTaskState"
+    />
   </div>
 </template>
 
 <script>
+import TasksProgress from "./components/TaskProgress.vue";
 import NewTask from "./components/NewTask.vue";
 import TaskGrid from "./components/TaskGrid.vue";
 
 export default {
   name: "App",
   components: {
+    TasksProgress,
     TaskGrid,
     NewTask,
   },
   data() {
     return {
-      tasks: [
-       
-      ],
+      tasks: [],
     };
+  },
+created(){
+    const json = localStorage.getItem('tasks')
+    const array = JSON.parse(json)
+
+    this.tasks = Array.isArray(array) ? array : []
+  },
+  computed: {
+    progress() {
+      const total = this.tasks.length;
+      const done = this.tasks.filter((t) => !t.pending).length;
+      return Math.round((done / total) * 100) || 0;
+    },
+  },
+  watch: {
+    tasks:{
+      deep: true,
+      handler(){
+        localStorage.setItem('tasks', JSON.stringify(this.tasks))
+      }
+    }
   },
   methods: {
     addTask(task) {
@@ -35,17 +61,17 @@ export default {
       }
     },
     // deleteTask(task){
-      // const i = this.tasks.indexOf(task)
-      // if(i >= 0) this.tasks.splice(i, 1)
-    deleteTask(i){
-      this.tasks.splice(i, 1)
+    // const i = this.tasks.indexOf(task)
+    // if(i >= 0) this.tasks.splice(i, 1)
+    deleteTask(i) {
+      this.tasks.splice(i, 1);
     },
 
-    toggleTaskState(i){
-      this.tasks[i].pending = !this.tasks[i].pending
-    }
-    
+    toggleTaskState(i) {
+      this.tasks[i].pending = !this.tasks[i].pending;
+    },
   },
+
 };
 </script>
 
