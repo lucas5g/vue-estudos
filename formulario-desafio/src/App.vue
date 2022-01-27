@@ -11,7 +11,7 @@
         <Rotulo nome="Sobrenome">
           <input type="text" v-model="sobrenome" />
         </Rotulo> -->
-				<NomeCompleto />
+				<NomeCompleto v-model="nomeCompleto"/>
         <Rotulo nome="Email">
           <input type="text" v-model="email" />
         </Rotulo>
@@ -28,10 +28,10 @@
       <div class="painel" v-else>
         <div class="cabecalho">Resultado</div>
         <Rotulo nome="Nome">
-          <span> {{ nome }} </span>
+          <span> {{ nomeCompleto.nome }} </span>
         </Rotulo>
         <Rotulo nome="Sobrenome">
-          <span> {{ sobrenome }} </span>
+          <span> {{ nomeCompleto.sobrenome }} </span>
         </Rotulo>
         <Rotulo nome="Email">
           <span> {{ email }} </span>
@@ -57,8 +57,12 @@ export default {
   data() {
     return {
 			enviado: false,
-      nome: "",
-      sobrenome: "",
+      nomeCompleto : {
+        nome: '',
+        sobrenome: ''
+      },
+      // nome: "",
+      // sobrenome: "",
       email: "",
       senha: "",
       armazenaDados: true,
