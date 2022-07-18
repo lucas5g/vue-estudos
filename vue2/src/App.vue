@@ -1,17 +1,37 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <input type="text" placeholder="cpf" 
+    v-mask="'###.###.###.##-##'">
+    <br>
+
+    <input v-mask="'##/##/####'" v-model="data"/>
+    <br>
+    <button 
+      v-on:click="count++"
+    >
+      Clicou {{ count }} vezes 
+    </button>
+    <p>
+      {{ count }}
+    </p>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+// import VueMask from 'v-mask'
+// import Vue from 'vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    // HelloWorld
+  },
+  data: () => {
+    return {
+      count: 0
+
+    }
   }
 }
 </script>
