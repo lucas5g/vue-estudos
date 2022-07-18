@@ -1,10 +1,14 @@
 <template>
   <div id="app">
     <input type="text" placeholder="cpf" 
-    v-mask="'###.###.###.##-##'">
+    v-mask="'###.###.###-##'">
     <br>
 
-    <input v-mask="'##/##/####'" v-model="data"/>
+    <input 
+      type="text"
+      name="date"
+      v-mask="'##/##/####'" 
+      />
     <br>
     <button 
       v-on:click="count++"
